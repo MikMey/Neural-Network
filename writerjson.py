@@ -31,7 +31,9 @@ def Read(file):
         with open(file + '.json', 'r') as f:
             mydict = json.load(f)
     except json.decoder.JSONDecodeError:
-        raise Exception(f"{file} is bad\n")
+        raise json.decoder.JSONDecodeError(f"{file} contains bad info\n")
+    except FileNotFoundError:
+        raise FileNotFoundError(f"{file} file doesn't exist")
         
     #Recode(mydict, "")
     #print("Downloaded\n")
