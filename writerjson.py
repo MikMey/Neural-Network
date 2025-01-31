@@ -27,9 +27,12 @@ def Recode(dict, change):
     return dict
 
 def Read(file):
-    with open(file + '.json', 'r') as f:
-        mydict = json.load(f)
-
+    try:
+        with open(file + '.json', 'r') as f:
+            mydict = json.load(f)
+    except json.decoder.JSONDecodeError:
+        raise Exception(f"{file} is bad\n")
+        
     #Recode(mydict, "")
     #print("Downloaded\n")
     return mydict
