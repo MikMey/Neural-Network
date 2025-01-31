@@ -31,7 +31,7 @@ def Read(file):
         mydict = json.load(f)
 
     #Recode(mydict, "")
-    print("Downloaded\n")
+    #print("Downloaded\n")
     return mydict
 
 def Write(mydict, file):
@@ -39,4 +39,4 @@ def Write(mydict, file):
 
     with open(file + '.json', 'w') as f:
         json.dump(mydict, f, indent=2)
-        print("Saved!\n")
+        #print("Saved!\n")
