@@ -10,8 +10,13 @@ class NeuralNetwork():
             self.input_requests = writerjson.Read(str(input_file))
         except:
             raise Exception("The code has an issue, please hold")
+        refeed = self.ask_input() # get the input for neural network
+        refeed = [self.fire_neuron(refeed) for self.current_layer in self.layered_weights if self.current_layer != 'final'][-1]
+        #         repetative loop          for every layer                      if current layer is not final but only save last loop
+        # could simply put refeed term into next bracket below, but makes code harder to comprehend
+        self.output = self.final_result(refeed) # runs for the final last loop # interpretes and returns the result
         
-        self.run_in_order()
+        #self.run_in_order()
 
     def ask_input(self):
         inputs = [
@@ -35,22 +40,18 @@ class NeuralNetwork():
         return res
 
     def final_result(self, refeed):
-        self.result = 0
-        for index, i in enumerate(refeed):
-            self.result += refeed[index] * self.layered_weights['final'][index]
-        self.result = str(self.result)
+        self.result = str(sum(refeed[index] * self.layered_weights['final'][index] for index in range(len(refeed))))
         try:
             return self.result_interpreter[self.result]
         except:
             return "failed", self.result
 
-    def run_in_order(self):
-        refeed = self.ask_input() # get the input for neural network
-        for i, self.current_layer in enumerate(self.layered_weights): # run once for every layer
-            if self.current_layer == 'final': 
-                continue # skip last loop
-            refeed = self.fire_neuron(refeed) # repetative loop, runs calculations with weights
-        self.output = self.final_result(refeed) # runs for the final last loop # interpretes and returns the result
+    # def run_in_order(self):
+    #     refeed = self.ask_input() # get the input for neural network
+    #     refeed = [self.fire_neuron(refeed) for self.current_layer in self.layered_weights if self.current_layer != 'final'][-1]
+    #     #         repetative loop          for every layer                      if current layer is not final but only save last loop
+    #     # could simply put refeed term into next bracket below, but makes code harder to comprehend
+    #     self.output = self.final_result(refeed) # runs for the final last loop # interpretes and returns the result
     
     def __str__(self): # required to get a string as output instead of pointer
         return f"\n{self.output}"
