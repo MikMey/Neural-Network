@@ -11,7 +11,8 @@ class NeuralNetwork():
         except:
             raise Exception("The code has an issue, please hold")
         
-        inputs = [1 if input(str(f'{question} y/n\n> ')) == 'y' else 0 for question in self.input_requests] # get the input for neural network
+        #inputs = [1 if input(str(f'{question} y/n\n> ')) == 'y' else 0 for question in self.input_requests] # get the input for neural network
+        inputs = self.input_requests #for non user input
         # list[item] is 1 if 'y'                                    else 0 for every question prompted
         refeed = [self.fire_neuron(inputs) for self.current_layer in self.layered_weights if self.current_layer != 'final'][-1]
         #         repetative loop          for every layer                      if current layer is not final but only save last loop
@@ -44,4 +45,5 @@ class NeuralNetwork():
 if __name__ == '__main__': # only runs if this file is selected
 
     while True:
-        print(NeuralNetwork("weights", "results", "inputs")) # print and run results
+        inputs = "inputs_cross" if input(str("Cross y/n\n> ")) == 'y' else "inputs_circle"
+        print(NeuralNetwork("weights_pic", "results_pic", inputs)) # print and run results
